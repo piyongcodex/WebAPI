@@ -1,6 +1,7 @@
 ﻿using CQRSpattern.Contracts;
 using CQRSpattern.Data;
 using CQRSpattern.Models;
+using CQRSpattern.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 

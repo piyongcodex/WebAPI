@@ -1,4 +1,5 @@
 ﻿using CQRSpattern.Messenging.Commands;
+using CQRSpattern.Messenging.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,13 +16,13 @@ namespace CQRSpattern.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(GetUserCommand command)
+        public async Task<IActionResult> GetUser(GetUserQuery command)
         {
             return Ok(await _sender.Send(command));
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers(GetUsersCommand command)
+        public async Task<IActionResult> GetUsers(GetUsersQuery command)
         {
             return Ok(await _sender.Send(command));
         }

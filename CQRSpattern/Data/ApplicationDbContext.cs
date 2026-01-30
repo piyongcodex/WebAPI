@@ -1,4 +1,4 @@
-﻿using CQRSpattern.Models;
+﻿using CQRSpattern.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CQRSpattern.Data

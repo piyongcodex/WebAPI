@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CQRSpattern.Models
+namespace CQRSpattern.Models.Entities
 {
     public class User
     {

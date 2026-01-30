@@ -1,4 +1,5 @@
 ﻿using CQRSpattern.Models;
+using CQRSpattern.Models.Entities;
 using MediatR;
 
 namespace CQRSpattern.Messenging.Commands

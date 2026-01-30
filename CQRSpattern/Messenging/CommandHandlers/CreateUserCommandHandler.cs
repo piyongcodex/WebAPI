@@ -1,6 +1,6 @@
 ﻿using CQRSpattern.Contracts;
 using CQRSpattern.Messenging.Commands;
-using CQRSpattern.Models;
+using CQRSpattern.Models.Entities;
 using MediatR;
 
 namespace CQRSpattern.Messenging.CommandHandlers
@@ -17,9 +17,9 @@ namespace CQRSpattern.Messenging.CommandHandlers
         {
             var newUser = new User
             {
-                Name = request.Name,
-                Username = request.Username,
-                Password = request.Password
+                Name = request.user.Name,
+                Username = request.user.Username,
+                Password = request.user.Password
             };
             return await _userRepository.Add(newUser, cancellationToken);
 

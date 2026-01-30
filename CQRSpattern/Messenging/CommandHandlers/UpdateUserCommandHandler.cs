@@ -1,6 +1,6 @@
 ﻿using CQRSpattern.Contracts;
 using CQRSpattern.Messenging.Commands;
-using CQRSpattern.Models;
+using CQRSpattern.Models.Entities;
 using MediatR;
 
 namespace CQRSpattern.Messenging.CommandHandlers
