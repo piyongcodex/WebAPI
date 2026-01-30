@@ -1,5 +1,4 @@
-﻿using CQRSpattern.Contracts;
-using CQRSpattern.Messenging.Commands;
+﻿using CQRSpattern.Messenging.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -21,7 +21,9 @@ builder.Services.AddMediatR(configuration =>
 
 //Database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-options.UseInMemoryDatabase("UserDataBase")
+options.UseMySql(
+    builder.Configuration.GetConnectionString("DefaultConnection"),
+    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")))
 );
 
 var app = builder.Build();
