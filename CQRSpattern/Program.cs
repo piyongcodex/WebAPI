@@ -1,3 +1,5 @@
+using CQRSpattern.Abstractions;
+using CQRSpattern.Configuration;
 using CQRSpattern.Contracts;
 using CQRSpattern.Data;
 using CQRSpattern.Repository;
@@ -25,6 +27,7 @@ options.UseMySql(
     builder.Configuration.GetConnectionString("DefaultConnection"),
     ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")))
 );
+builder.Services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
 
 var app = builder.Build();
 

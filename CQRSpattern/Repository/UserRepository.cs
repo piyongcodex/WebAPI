@@ -1,8 +1,13 @@
-﻿using CQRSpattern.Contracts;
+﻿using CQRSpattern.Abstractions;
+using CQRSpattern.Contracts;
 using CQRSpattern.Data;
 using CQRSpattern.Models;
 using CQRSpattern.Models.Entities;
+using Dapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
+using System.Data;
 using System.Threading;
 
 namespace CQRSpattern.Repository
@@ -10,14 +15,16 @@ namespace CQRSpattern.Repository
     public class UserRepository : IUserRepository
     {
         protected readonly ApplicationDbContext _db;
-        public UserRepository(ApplicationDbContext db)
+        private readonly IDbConnectionFactory _connectionFactory;
+        public UserRepository(ApplicationDbContext db, IDbConnectionFactory connectionFactory)
         {
             _db = db;
+            _connectionFactory = connectionFactory;
         }
         public async Task<User> Add(User user, CancellationToken cancellationToken)
         {
             _db.Users.Add(user);
-            await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync(cancellationToken);
             return user;
         }
         public async Task<bool> Delete(Guid id, CancellationToken cancellationToken)
@@ -30,9 +37,19 @@ namespace CQRSpattern.Repository
 
             return true;
         }
-        public async Task<User> GetUser(Guid id, CancellationToken cancellationToken)
+        public async Task<User?> GetUser(Guid id, CancellationToken cancellationToken)
         {
-            return await _db.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+            using IDbConnection sqlConnection = _connectionFactory.CreateConnection();
+
+            var command = new CommandDefinition(
+                @"SELECT Id, Name, Username, Password
+                FROM users
+                WHERE Id = @UserId",
+                new { UserId = id },
+                cancellationToken: cancellationToken
+            );
+
+            return await sqlConnection.QueryFirstOrDefaultAsync<User>(command);
         }
         public async Task<IEnumerable<User>> GetUsers(CancellationToken cancellationToken)
         {
@@ -44,11 +61,11 @@ namespace CQRSpattern.Repository
         }
         public async Task<User> Update(UpdateUserDTO user, Guid id, CancellationToken cancellationToken)
         {
-            var findUser = _db.Users.FirstOrDefault(u => u.Id == id);
+            var findUser = await _db.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
             if (findUser == null) return null;
 
             findUser.Name = user.Name;
-            await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync(cancellationToken);
 
             return findUser;
         }
