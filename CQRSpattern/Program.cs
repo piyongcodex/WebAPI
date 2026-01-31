@@ -1,8 +1,13 @@
+using CQRSpattern;
 using CQRSpattern.Abstractions;
 using CQRSpattern.Configuration;
 using CQRSpattern.Contracts;
 using CQRSpattern.Data;
+using CQRSpattern.Messenging.Commands;
+using CQRSpattern.Messenging.Common.Behavior;
 using CQRSpattern.Repository;
+using FluentValidation;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +18,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//register validators
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 //Inject Repo
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -39,6 +50,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseExceptionHandler();
 
 app.UseAuthorization();
 
