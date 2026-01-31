@@ -53,7 +53,14 @@ namespace CQRSpattern.Repository
         }
         public async Task<IEnumerable<User>> GetUsers(CancellationToken cancellationToken)
         {
-            return await _db.Users.ToListAsync(cancellationToken);
+            using IDbConnection sqlConnection = _connectionFactory.CreateConnection();
+
+            var command = new CommandDefinition(
+               @"SELECT Id, Name, Username, Password
+                FROM users",
+               cancellationToken: cancellationToken);
+
+            return await sqlConnection.QueryAsync<User>(command);
         }
         public async Task<bool> Login(string username, string password, CancellationToken cancellationToken)
         {
@@ -68,6 +75,11 @@ namespace CQRSpattern.Repository
             await _db.SaveChangesAsync(cancellationToken);
 
             return findUser;
+        }
+        public async Task<User> Exist(string username, CancellationToken cancellationToken)
+        {
+           return await _db.Users.FirstOrDefaultAsync(u => u.Username == username, cancellationToken);
+            
         }
     }
 }
