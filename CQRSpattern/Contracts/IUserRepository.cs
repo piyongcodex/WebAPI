@@ -12,6 +12,7 @@ namespace CQRSpattern.Contracts
         Task<bool> Delete(Guid id, CancellationToken cancellationToken);
         Task<User> GetUser(Guid id,CancellationToken cancellationToken);
         Task<bool> Login(string username, string password, CancellationToken cancellationToken);
+        Task<User> Exist(string username, CancellationToken cancellationToken);
 
     }
 }

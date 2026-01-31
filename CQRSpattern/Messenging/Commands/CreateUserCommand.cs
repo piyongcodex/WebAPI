@@ -4,5 +4,5 @@ using MediatR;
 
 namespace CQRSpattern.Messenging.Commands
 {
-    public record CreateUserCommand(AddUserDTO user): IRequest<User>;
+    public record CreateUserCommand(AddUserDTO user): IRequest<CreateUserResponseDTO>;
 }

@@ -1,5 +1,6 @@
 ﻿using CQRSpattern.Messenging.Commands;
 using CQRSpattern.Messenging.Queries;
+using CQRSpattern.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,13 +25,22 @@ namespace CQRSpattern.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsers(GetUsersQuery command)
         {
+            var result = await _sender.Send(command);
+            if (result == null)
+                return NotFound();
+
             return Ok(await _sender.Send(command));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateUser(CreateUserCommand command)
         {
-            return Ok(await _sender.Send(command));
+            var result = await _sender.Send(command);
+
+            if (result.response == ResponseEnum.Conflict)
+                return Conflict(new { title = "Conflict", message = "Username already exist" });
+
+            return CreatedAtAction(nameof(GetUser), new { id = result.user.Id }, result.user);
         }
 
         [HttpPut]
