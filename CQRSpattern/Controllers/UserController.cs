@@ -33,14 +33,16 @@ namespace CQRSpattern.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(CreateUserCommand command)
+        public async Task<IActionResult> CreateUser([FromBody] AddUserDTO dto)
         {
+            var command = new CreateUserCommand(dto);
             var result = await _sender.Send(command);
 
             if (result.response == ResponseEnum.Conflict)
                 return Conflict(new { title = "Conflict", message = "Username already exist" });
 
             return CreatedAtAction(nameof(GetUser), new { id = result.user.Id }, result.user);
+
         }
 
         [HttpPut]
