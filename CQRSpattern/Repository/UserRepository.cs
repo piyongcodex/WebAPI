@@ -4,11 +4,8 @@ using CQRSpattern.Data;
 using CQRSpattern.Models;
 using CQRSpattern.Models.Entities;
 using Dapper;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using MySqlConnector;
 using System.Data;
-using System.Threading;
 
 namespace CQRSpattern.Repository
 {
