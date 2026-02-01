@@ -1,7 +1,9 @@
 <Solution>
-  <Project Path="CQRSpattern.Application/CQRSpattern.Application.csproj" Id="317ebc6d-c334-418c-84f2-27705e53b070" />
-  <Project Path="CQRSpattern.Domain/CQRSpattern.Domain.csproj" Id="352072c0-0c9b-4d84-9a5f-3d5def48efa9" />
-  <Project Path="CQRSpattern.Infrastructure/CQRSpattern.Infrastructure.csproj" Id="cb8976cf-8285-4238-9a59-cd367847ec73" />
-  <Project Path="CQRSpattern.Presentation/CQRSpattern.Presentation.csproj" Id="ad705cda-6066-4bad-9752-444bf06275a0" />
-  <Project Path="CQRSpattern/CQRSpattern.API.csproj" />
+  <Folder Name="/src/">
+    <Project Path="CQRSpattern.Application/CQRSpattern.Application.csproj" Id="317ebc6d-c334-418c-84f2-27705e53b070" />
+    <Project Path="CQRSpattern.Domain/CQRSpattern.Domain.csproj" Id="352072c0-0c9b-4d84-9a5f-3d5def48efa9" />
+    <Project Path="CQRSpattern.Infrastructure/CQRSpattern.Infrastructure.csproj" Id="cb8976cf-8285-4238-9a59-cd367847ec73" />
+    <Project Path="CQRSpattern.Presentation/CQRSpattern.Presentation.csproj" Id="ad705cda-6066-4bad-9752-444bf06275a0" />
+    <Project Path="CQRSpattern/CQRSpattern.API.csproj" />
+  </Folder>
 </Solution>
