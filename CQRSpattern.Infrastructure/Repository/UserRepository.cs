@@ -22,15 +22,14 @@ namespace CQRSpattern.Infrastructure.Repository
             await _db.SaveChangesAsync(cancellationToken);
             return user;
         }
-        public async Task<bool> Delete(Guid id, CancellationToken cancellationToken)
+        public async Task<Guid> Delete(Guid id, CancellationToken cancellationToken)
         {
             var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
-            if (user == null) return false;
-
+    
             _db.Users.Remove(user);
             await _db.SaveChangesAsync(cancellationToken);
 
-            return true;
+            return user.Id;
         }
         public async Task<User?> GetUser(Guid id, CancellationToken cancellationToken)
         {
