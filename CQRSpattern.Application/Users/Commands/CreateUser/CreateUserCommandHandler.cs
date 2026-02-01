@@ -21,8 +21,6 @@ namespace CQRSpattern.Application.Users.Commands.CreateUser
         }
         public async Task<Result<UserDto>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("CreateUserCommand started for Username: {Username}", request.User.Username);
-
             bool exist = await _userRepository.Exist(request.User.Username, cancellationToken);
 
             if (exist)

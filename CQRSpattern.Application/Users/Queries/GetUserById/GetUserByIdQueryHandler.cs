@@ -19,7 +19,6 @@ namespace CQRSpattern.Application.Users.Queries.GetUserById
 
         public async Task<Result<UserDto>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("GetUserByIdQuery started for UserId: {Id}", request.Id);
 
             var user = await _userRepository.GetUser(request.Id, cancellationToken);
 

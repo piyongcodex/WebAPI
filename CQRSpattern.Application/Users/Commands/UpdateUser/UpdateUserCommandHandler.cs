@@ -19,7 +19,6 @@ namespace CQRSpattern.Application.Users.Commands.UpdateUser
 
         public async Task<Result<UserDto>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("UpdateUserCommand started for UserId: {Id}", request.Id);
 
             bool exists = await _userRepository.Exist(request.Id, cancellationToken);
 

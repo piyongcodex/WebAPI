@@ -18,7 +18,6 @@ namespace CQRSpattern.Application.Users.Commands.DeleteUser
 
         public async Task<Result<Guid>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("DeleteUserCommand started for UserId: {Id}", request.Id);
 
             bool exist = await _userRepository.Exist(request.Id, cancellationToken);
 

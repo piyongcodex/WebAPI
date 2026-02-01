@@ -3,6 +3,7 @@ using CQRSpattern.Application.Behaviors;
 using CQRSpattern.Infrastructure;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 
@@ -24,6 +25,9 @@ builder.Services.AddValidatorsFromAssembly(applicationAssembly);
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+
+
 
 //Inject Repo
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -36,6 +40,7 @@ builder.Services.AddMediatR(cfg =>
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .CreateLogger();
+
 
 builder.Host.UseSerilog();
 

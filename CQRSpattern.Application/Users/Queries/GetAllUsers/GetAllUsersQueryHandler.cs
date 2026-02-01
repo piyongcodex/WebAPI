@@ -21,8 +21,6 @@ namespace CQRSpattern.Application.Users.Queries.GetAllUsers
             GetAllUsersQuery request,
             CancellationToken cancellationToken)
         {
-            _logger.LogInformation("GetAllUsersQuery started");
-
             var users = await _userRepository.GetAllUsers(cancellationToken);
 
             var dtos = users.Select(user => new UserDto
