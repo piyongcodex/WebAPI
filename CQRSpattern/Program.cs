@@ -3,6 +3,7 @@ using CQRSpattern.Application.Behaviors;
 using CQRSpattern.Infrastructure;
 using FluentValidation;
 using MediatR;
+using Serilog;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +31,13 @@ builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(applicationAssembly);
 });
+
+//Logging
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 

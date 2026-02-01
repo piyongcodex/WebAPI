@@ -5,9 +5,11 @@ namespace CQRSpattern.API.Middlewares
 {
     public class GlobalExceptionHandler : IExceptionHandler
     {
+        private readonly ILogger<GlobalExceptionHandler> _logger;
         private readonly IProblemDetailsService _problemDetailsService;
-        public GlobalExceptionHandler(IProblemDetailsService problemDetailsService)
+        public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger, IProblemDetailsService problemDetailsService)
         {
+            _logger = logger;
             _problemDetailsService = problemDetailsService;
         }
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
@@ -19,6 +21,8 @@ namespace CQRSpattern.API.Middlewares
                 ValidationAppException => (Detail: exception.Message, StatusCode: StatusCodes.Status422UnprocessableEntity),
                 _ => (Detail: exception.Message, StatusCode: StatusCodes.Status500InternalServerError)
             };
+
+            _logger.LogError(exception, "Unhandled exception occurred. TraceId: {TraceId}", httpContext.TraceIdentifier);
 
             httpContext.Response.StatusCode = excDetails.StatusCode;
 
