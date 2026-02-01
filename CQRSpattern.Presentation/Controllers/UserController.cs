@@ -1,5 +1,6 @@
 ﻿using CQRSpattern.Application.Common.Results;
 using CQRSpattern.Application.Users.Commands.CreateUser;
+using CQRSpattern.Application.Users.Commands.DeleteUser;
 using CQRSpattern.Application.Users.Commands.UpdateUser;
 using CQRSpattern.Application.Users.DTOs;
 using CQRSpattern.Application.Users.Queries.GetAllUsers;
@@ -67,6 +68,19 @@ namespace CQRSpattern.Presentation.Controllers
         public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserRequestDto dto)
         {
             var result = await _sender.Send(new UpdateUserCommand(id, dto));
+
+            return result.Status switch
+            {
+                ResultStatus.Success => Ok(result.Value),
+                ResultStatus.NotFound => NotFound(new { message = result.Error }),
+                ResultStatus.Conflict => Conflict(new { message = result.Error }),
+                _ => StatusCode(500)
+            };
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
+        {
+            var result = await _sender.Send(new DeleteUserCommand(id));
 
             return result.Status switch
             {
