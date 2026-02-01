@@ -46,7 +46,7 @@ namespace CQRSpattern.Infrastructure.Repository
 
             return await sqlConnection.QueryFirstOrDefaultAsync<User>(command);
         }
-        public async Task<IEnumerable<User>> GetUsers(CancellationToken cancellationToken)
+        public async Task<IEnumerable<User>> GetAllUsers(CancellationToken cancellationToken)
         {
             using IDbConnection sqlConnection = _connectionFactory.CreateConnection();
 
@@ -61,20 +61,33 @@ namespace CQRSpattern.Infrastructure.Repository
         {
             return true;
         }
-        public async Task<User> Update(User user, Guid id, CancellationToken cancellationToken)
+        public async Task<User> Update(Guid id, string name, string username, string password, CancellationToken cancellationToken)
         {
-            var findUser = await _db.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
-            if (findUser == null) return null;
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
 
-            findUser.Name = user.Name;
+            user.Name = name;
+            user.Username = username;
+            user.Password = password;
+
             await _db.SaveChangesAsync(cancellationToken);
 
-            return findUser;
+            return user;
+
         }
-        public async Task<User> Exist(string username, CancellationToken cancellationToken)
+        public async Task<bool> Exist(string username, CancellationToken cancellationToken)
         {
-           return await _db.Users.FirstOrDefaultAsync(u => u.Username == username, cancellationToken);
-            
+            var exist = await _db.Users.FirstOrDefaultAsync(u => u.Username == username, cancellationToken);
+            if (exist == null)
+                return false;
+            return true;
         }
+        public async Task<bool> Exist(Guid id, CancellationToken cancellationToken)
+        {
+            var exist = await _db.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+            if (exist == null)
+                return false;
+            return true;
+        }
+
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace CQRSpattern.Application.Users.Commands.CreateUser
+﻿namespace CQRSpattern.Application.Users.DTOs
 {
-    public class CreateUserRequest
+    public class UpdateUserRequestDto
     {
         public string Name { get; set; }
         public string Username { get; set; }

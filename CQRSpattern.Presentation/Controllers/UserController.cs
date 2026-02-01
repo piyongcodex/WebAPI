@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CQRSpattern.Application.Users.Queries;
-using MediatR;
+﻿using CQRSpattern.Application.Common.Results;
 using CQRSpattern.Application.Users.Commands.CreateUser;
-using CQRSpattern.Application.Users.Commands.CreateUser.Enums;
+using CQRSpattern.Application.Users.Commands.UpdateUser;
+using CQRSpattern.Application.Users.DTOs;
+using CQRSpattern.Application.Users.Queries.GetAllUsers;
+using CQRSpattern.Application.Users.Queries.GetUserById;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CQRSpattern.Presentation.Controllers
 {
@@ -16,25 +19,62 @@ namespace CQRSpattern.Presentation.Controllers
             _sender = sender;
         }
 
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> GetUser([FromRoute] Guid Id)
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
         {
-            var command = new GetUserQuery(Id);
+            var result = await _sender.Send(new GetAllUsersQuery());
 
-            return Ok(await _sender.Send(command));
+            return result.Status switch
+            {
+                ResultStatus.Success => Ok(result.Value),
+                ResultStatus.NotFound => NotFound(new { message = result.Error }),
+                _ => StatusCode(500)
+            };
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUser([FromRoute] Guid id)
+        {
+            var result = await _sender.Send(new GetUserByIdQuery(id));
+
+            return result.Status switch
+            {
+                ResultStatus.Success => Ok(result.Value),
+                ResultStatus.NotFound => NotFound(new { message = result.Error }),
+                _ => StatusCode(500)
+            };
+
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest dto)
+        public async Task<IActionResult> CreateUser([FromBody] UserDto dto)
         {
-            var command = new CreateUserCommand(dto);
-            var result = await _sender.Send(command);
+            var result = await _sender.Send(new CreateUserCommand(dto));
 
-            if (result.response == ResponseStatus.Conflict)
-                return Conflict(new { title = "Conflict", message = "Username already exist" });
+            return result.Status switch
+            {
+                ResultStatus.Success => CreatedAtAction(
+                    nameof(GetUser),
+                    new { id = result.Value.Id },
+                    result.Value
+                ),
+                ResultStatus.Conflict => Conflict(new { message = result.Error }),
+                _ => StatusCode(500)
+            };
 
-            return CreatedAtAction(nameof(GetUser), new { id = result.user.Id }, result.user);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserRequestDto dto)
+        {
+            var result = await _sender.Send(new UpdateUserCommand(id, dto));
 
+            return result.Status switch
+            {
+                ResultStatus.Success => Ok(result.Value),
+                ResultStatus.NotFound => NotFound(new { message = result.Error }),
+                ResultStatus.Conflict => Conflict(new { message = result.Error }),
+                _ => StatusCode(500)
+            };
         }
     }
 }
