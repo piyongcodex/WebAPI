@@ -26,7 +26,6 @@ namespace CQRSpattern.Infrastructure
 
             return services;
 
-            return services;
         }
     }
 }
