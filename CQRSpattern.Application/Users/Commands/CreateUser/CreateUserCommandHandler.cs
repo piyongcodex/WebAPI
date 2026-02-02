@@ -25,7 +25,7 @@ namespace CQRSpattern.Application.Users.Commands.CreateUser
 
             if (exist)
             {
-                _logger.LogWarning("CreateUserCommand conflict: Username already exists. Username: {Username}", request.User.Username);
+                _logger.LogWarning("CreateUserCommand conflict: User creation failed: Username '{Username}' already exists", request.User.Username);
                 return Result<UserDto>.Conflict("Username already exist");
             }
 
