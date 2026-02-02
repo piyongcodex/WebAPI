@@ -6,11 +6,13 @@ using CQRSpattern.Application.Users.DTOs;
 using CQRSpattern.Application.Users.Queries.GetAllUsers;
 using CQRSpattern.Application.Users.Queries.GetUserById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CQRSpattern.Presentation.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly ISender _sender;
@@ -77,6 +79,8 @@ namespace CQRSpattern.Presentation.Controllers
                 _ => StatusCode(500)
             };
         }
+
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
         {
