@@ -19,7 +19,7 @@ namespace CQRSpattern.Application.Behaviors
             CancellationToken cancellationToken)
         {
             var requestName = typeof(TRequest).Name;
-            _logger.LogInformation("Handling {RequestName}", requestName);
+            _logger.LogInformation("Handling {RequestName} {@Request}", requestName, request);
 
             var stopwatch = Stopwatch.StartNew();
 
