@@ -3,7 +3,6 @@ using CQRSpattern.Application.Behaviors;
 using CQRSpattern.Infrastructure;
 using FluentValidation;
 using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 
