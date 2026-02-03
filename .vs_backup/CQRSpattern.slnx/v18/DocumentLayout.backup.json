@@ -1,0 +1,133 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\C# Projects\\WebAPI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{2E063902-BE84-7A08-AD38-C33C1449D96D}|CQRSpattern\\CQRSpattern.API.csproj|d:\\c# projects\\webapi\\cqrspattern\\middlewares\\globalexceptionhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E063902-BE84-7A08-AD38-C33C1449D96D}|CQRSpattern\\CQRSpattern.API.csproj|solutionrelative:cqrspattern\\middlewares\\globalexceptionhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E063902-BE84-7A08-AD38-C33C1449D96D}|CQRSpattern\\CQRSpattern.API.csproj|d:\\c# projects\\webapi\\cqrspattern\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E063902-BE84-7A08-AD38-C33C1449D96D}|CQRSpattern\\CQRSpattern.API.csproj|solutionrelative:cqrspattern\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD705CDA-6066-4BAD-9752-444BF06275A0}|CQRSpattern.Presentation\\CQRSpattern.Presentation.csproj|d:\\c# projects\\webapi\\cqrspattern.presentation\\cqrspattern.presentation.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{AD705CDA-6066-4BAD-9752-444BF06275A0}|CQRSpattern.Presentation\\CQRSpattern.Presentation.csproj|solutionrelative:cqrspattern.presentation\\cqrspattern.presentation.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CB8976CF-8285-4238-9A59-CD367847EC73}|CQRSpattern.Infrastructure\\CQRSpattern.Infrastructure.csproj|d:\\c# projects\\webapi\\cqrspattern.infrastructure\\cqrspattern.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{CB8976CF-8285-4238-9A59-CD367847EC73}|CQRSpattern.Infrastructure\\CQRSpattern.Infrastructure.csproj|solutionrelative:cqrspattern.infrastructure\\cqrspattern.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{352072C0-0C9B-4D84-9A5F-3D5DEF48EFA9}|CQRSpattern.Domain\\CQRSpattern.Domain.csproj|d:\\c# projects\\webapi\\cqrspattern.domain\\cqrspattern.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{352072C0-0C9B-4D84-9A5F-3D5DEF48EFA9}|CQRSpattern.Domain\\CQRSpattern.Domain.csproj|solutionrelative:cqrspattern.domain\\cqrspattern.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{317EBC6D-C334-418C-84F2-27705E53B070}|CQRSpattern.Application\\CQRSpattern.Application.csproj|d:\\c# projects\\webapi\\cqrspattern.application\\cqrspattern.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{317EBC6D-C334-418C-84F2-27705E53B070}|CQRSpattern.Application\\CQRSpattern.Application.csproj|solutionrelative:cqrspattern.application\\cqrspattern.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E063902-BE84-7A08-AD38-C33C1449D96D}|CQRSpattern\\CQRSpattern.API.csproj|d:\\c# projects\\webapi\\cqrspattern\\cqrspattern.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{2E063902-BE84-7A08-AD38-C33C1449D96D}|CQRSpattern\\CQRSpattern.API.csproj|solutionrelative:cqrspattern\\cqrspattern.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GlobalExceptionHandler.cs",
+              "DocumentMoniker": "D:\\C# Projects\\WebAPI\\CQRSpattern\\Middlewares\\GlobalExceptionHandler.cs",
+              "RelativeDocumentMoniker": "CQRSpattern\\Middlewares\\GlobalExceptionHandler.cs",
+              "ToolTip": "D:\\C# Projects\\WebAPI\\CQRSpattern\\Middlewares\\GlobalExceptionHandler.cs",
+              "RelativeToolTip": "CQRSpattern\\Middlewares\\GlobalExceptionHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-03T21:45:07.645Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\C# Projects\\WebAPI\\CQRSpattern\\Program.cs",
+              "RelativeDocumentMoniker": "CQRSpattern\\Program.cs",
+              "ToolTip": "D:\\C# Projects\\WebAPI\\CQRSpattern\\Program.cs",
+              "RelativeToolTip": "CQRSpattern\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-03T21:45:03.034Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CQRSpattern.Presentation.csproj",
+              "DocumentMoniker": "D:\\C# Projects\\WebAPI\\CQRSpattern.Presentation\\CQRSpattern.Presentation.csproj",
+              "RelativeDocumentMoniker": "CQRSpattern.Presentation\\CQRSpattern.Presentation.csproj",
+              "ToolTip": "D:\\C# Projects\\WebAPI\\CQRSpattern.Presentation\\CQRSpattern.Presentation.csproj",
+              "RelativeToolTip": "CQRSpattern.Presentation\\CQRSpattern.Presentation.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-02-03T21:44:25.774Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CQRSpattern.Infrastructure.csproj",
+              "DocumentMoniker": "D:\\C# Projects\\WebAPI\\CQRSpattern.Infrastructure\\CQRSpattern.Infrastructure.csproj",
+              "RelativeDocumentMoniker": "CQRSpattern.Infrastructure\\CQRSpattern.Infrastructure.csproj",
+              "ToolTip": "D:\\C# Projects\\WebAPI\\CQRSpattern.Infrastructure\\CQRSpattern.Infrastructure.csproj",
+              "RelativeToolTip": "CQRSpattern.Infrastructure\\CQRSpattern.Infrastructure.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-02-03T21:44:38.12Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CQRSpattern.Domain.csproj",
+              "DocumentMoniker": "D:\\C# Projects\\WebAPI\\CQRSpattern.Domain\\CQRSpattern.Domain.csproj",
+              "RelativeDocumentMoniker": "CQRSpattern.Domain\\CQRSpattern.Domain.csproj",
+              "ToolTip": "D:\\C# Projects\\WebAPI\\CQRSpattern.Domain\\CQRSpattern.Domain.csproj",
+              "RelativeToolTip": "CQRSpattern.Domain\\CQRSpattern.Domain.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-02-03T21:44:36.553Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CQRSpattern.Application.csproj",
+              "DocumentMoniker": "D:\\C# Projects\\WebAPI\\CQRSpattern.Application\\CQRSpattern.Application.csproj",
+              "RelativeDocumentMoniker": "CQRSpattern.Application\\CQRSpattern.Application.csproj",
+              "ToolTip": "D:\\C# Projects\\WebAPI\\CQRSpattern.Application\\CQRSpattern.Application.csproj",
+              "RelativeToolTip": "CQRSpattern.Application\\CQRSpattern.Application.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-02-03T21:44:14.234Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CQRSpattern.API.csproj",
+              "DocumentMoniker": "D:\\C# Projects\\WebAPI\\CQRSpattern\\CQRSpattern.API.csproj",
+              "RelativeDocumentMoniker": "CQRSpattern\\CQRSpattern.API.csproj",
+              "ToolTip": "D:\\C# Projects\\WebAPI\\CQRSpattern\\CQRSpattern.API.csproj",
+              "RelativeToolTip": "CQRSpattern\\CQRSpattern.API.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-02-03T21:44:03.591Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

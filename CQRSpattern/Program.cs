@@ -63,7 +63,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         //options.TokenValidationParameters.RoleClaimType = "roles";
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateAudience = true,
+            ValidateAudience = false,
             ValidateIssuer = true,
             ValidateLifetime = true,
             RoleClaimType = ClaimTypes.Role

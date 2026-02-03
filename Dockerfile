@@ -1,19 +1,34 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copy everything
-COPY . ./
+# Copy all project files
+COPY ["CQRSpattern/CQRSpattern.API.csproj", "CQRSpattern/"]
+COPY ["CQRSpattern.Application/CQRSpattern.Application.csproj", "CQRSpattern.Application/"]
+COPY ["CQRSpattern.Domain/CQRSpattern.Domain.csproj", "CQRSpattern.Domain/"]
+COPY ["CQRSpattern.Infrastructure/CQRSpattern.Infrastructure.csproj", "CQRSpattern.Infrastructure/"]
+COPY ["CQRSpattern.Presentation/CQRSpattern.Presentation.csproj", "CQRSpattern.Presentation/"]
 
-# Restore the main Presentation project (it will restore dependencies)
-RUN dotnet restore CQRSpattern/CQRSpattern.Presentation/CQRSpattern.Presentation.csproj
+# Restore dependencies
+RUN dotnet restore "CQRSpattern/CQRSpattern.API.csproj"
 
-# Build and publish
-RUN dotnet publish CQRSpattern/CQRSpattern.Presentation/CQRSpattern.Presentation.csproj -c Release -o /app/out
+# Copy source code for each project (avoiding .vs folder)
+COPY CQRSpattern/ CQRSpattern/
+COPY CQRSpattern.Application/ CQRSpattern.Application/
+COPY CQRSpattern.Domain/ CQRSpattern.Domain/
+COPY CQRSpattern.Infrastructure/ CQRSpattern.Infrastructure/
+COPY CQRSpattern.Presentation/ CQRSpattern.Presentation/
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+# Build
+WORKDIR "/src/CQRSpattern"
+RUN dotnet build "CQRSpattern.API.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "CQRSpattern.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
-COPY --from=build /app/out .
-
 EXPOSE 8080
+EXPOSE 8081
 
-ENTRYPOINT ["dotnet", "CQRSpattern.Presentation.dll"]
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "CQRSpattern.API.dll"]
