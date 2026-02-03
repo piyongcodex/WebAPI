@@ -1,0 +1,18 @@
+# Make sure you're in WebAPI folder
+pwd
+
+# Create .dockerignore
+notepad .dockerignore
+```
+
+**Paste this sa .dockerignore:**
+```
+.vs/
+.vscode/
+bin/
+obj/
+*.user
+*.suo
+.git/
+.github/
+node_modules/
