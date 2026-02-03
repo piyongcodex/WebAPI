@@ -4,24 +4,30 @@ using CQRSpattern.Infrastructure;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using System.Security.Claims;
+using System.Text.Json;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 var presentationAssembly = typeof(CQRSpattern.Presentation.AssemblyReference).Assembly;
 var applicationAssembly = typeof(CQRSpattern.Application.AssemblyReference).Assembly;
 
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+builder.Host.UseSerilog();
 
-builder.Services.AddControllers().AddApplicationPart(presentationAssembly);
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers()
+    .AddApplicationPart(presentationAssembly);
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "CQRSpattern API", Version = "v1" });
-
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -31,7 +37,6 @@ builder.Services.AddSwaggerGen(c =>
         In = ParameterLocation.Header,
         Description = "Enter 'Bearer {token}'"
     });
-
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -48,59 +53,86 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-//register validators
-builder.Services.AddValidatorsFromAssembly(applicationAssembly);
-
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-builder.Services.AddProblemDetails();
-builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-
-//Keycloak
+var keycloakSettings = builder.Configuration.GetSection("Keycloak");
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.Authority = "http://localhost:8080/realms/master";
-        options.Audience = "my-api";
+        options.Authority = keycloakSettings["Authority"];
+        options.Audience = keycloakSettings["Audience"];
         options.RequireHttpsMetadata = false;
+        //options.TokenValidationParameters.RoleClaimType = "roles";
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = true,
+            ValidateIssuer = true,
+            ValidateLifetime = true,
+            RoleClaimType = ClaimTypes.Role
+        };
 
-        options.TokenValidationParameters.RoleClaimType = "roles";
+        options.Events = new JwtBearerEvents
+        {
+            OnTokenValidated = context =>
+            {
+                if (context.Principal?.Identity is ClaimsIdentity identity)
+                {
+                    var resourceAccessClaim = context.Principal.Claims
+                        .FirstOrDefault(c => c.Type == "resource_access");
+
+                    if (resourceAccessClaim != null)
+                    {
+                        var resourceAccess = JsonDocument.Parse(resourceAccessClaim.Value);
+
+                        if (resourceAccess.RootElement.TryGetProperty("CQRSpattern.API", out var clientRoles))
+                        {
+                            if (clientRoles.TryGetProperty("roles", out var roles))
+                            {
+                                foreach (var role in roles.EnumerateArray())
+                                {
+                                    var roleValue = role.GetString();
+                                    if (!string.IsNullOrEmpty(roleValue))
+                                    {
+                                        identity.AddClaim(new Claim(ClaimTypes.Role, roleValue));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return Task.CompletedTask;
+            }
+        };
     });
 
 builder.Services.AddAuthorization();
 
-
-//Inject Repo
-builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(applicationAssembly);
 });
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
-//Logging
-Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .CreateLogger();
+builder.Services.AddValidatorsFromAssembly(applicationAssembly);
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
-builder.Host.UseSerilog();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); // Production
 
 app.UseExceptionHandler();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

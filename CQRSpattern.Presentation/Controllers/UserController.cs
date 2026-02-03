@@ -5,6 +5,7 @@ using CQRSpattern.Application.Users.Commands.UpdateUser;
 using CQRSpattern.Application.Users.DTOs;
 using CQRSpattern.Application.Users.Queries.GetAllUsers;
 using CQRSpattern.Application.Users.Queries.GetUserById;
+using CQRSpattern.Presentation.Constants;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace CQRSpattern.Presentation.Controllers
         {
             _sender = sender;
         }
-
+        [Authorize(Roles = Roles.CQRSUser)]
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -35,6 +36,7 @@ namespace CQRSpattern.Presentation.Controllers
             };
         }
 
+        [Authorize(Roles = Roles.UserView)]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser([FromRoute] Guid id)
         {
@@ -49,6 +51,7 @@ namespace CQRSpattern.Presentation.Controllers
 
         }
 
+        [Authorize(Roles = Roles.UserAdd)]
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] UserDto dto)
         {
@@ -66,6 +69,8 @@ namespace CQRSpattern.Presentation.Controllers
             };
 
         }
+
+        [Authorize(Roles = Roles.UserUpdate)]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserRequestDto dto)
         {
@@ -80,7 +85,7 @@ namespace CQRSpattern.Presentation.Controllers
             };
         }
 
-        
+        [Authorize(Roles = Roles.UserDelete)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
         {
