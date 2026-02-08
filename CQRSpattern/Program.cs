@@ -60,14 +60,45 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.Authority = keycloakSettings["Authority"];
         options.Audience = keycloakSettings["Audience"];
         options.RequireHttpsMetadata = false;
+
+        var httpClient = new HttpClient();
+        var jwksUri = $"{keycloakSettings["Authority"]}/protocol/openid-connect/certs";
+
         //options.TokenValidationParameters.RoleClaimType = "roles";
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateAudience = false,
             ValidateIssuer = true,
+            ValidIssuers = keycloakSettings
+                .GetSection("ValidIssuers")
+                .Get<string[]>(),
+            ValidAudiences = keycloakSettings
+                .GetSection("ValidAudiences")
+                .Get<string[]>(),
             ValidateLifetime = true,
-            RoleClaimType = ClaimTypes.Role
+            RoleClaimType = ClaimTypes.Role,
+             IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
+             {
+                 var jwks = httpClient.GetStringAsync(jwksUri).Result;
+                 var keys = new JsonWebKeySet(jwks);
+                 return keys.GetSigningKeys();
+             }
         };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                Console.WriteLine($"Authentication failed: {context.Exception}");
+                return Task.CompletedTask;
+            },
+            OnTokenValidated = context =>
+            {
+                Console.WriteLine("Token validated successfully");
+                return Task.CompletedTask;
+            }
+        };
+
 
         options.Events = new JwtBearerEvents
         {
