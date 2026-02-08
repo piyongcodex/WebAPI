@@ -37,7 +37,7 @@ namespace CQRSpattern.Infrastructure.Repository
 
             var command = new CommandDefinition(
                 @"SELECT Id, Name, Username, Password
-                FROM users
+                FROM Users
                 WHERE Id = @UserId",
                 new { UserId = id },
                 cancellationToken: cancellationToken
@@ -51,7 +51,7 @@ namespace CQRSpattern.Infrastructure.Repository
 
             var command = new CommandDefinition(
                @"SELECT Id, Name, Username, Password
-                FROM users",
+                FROM Users",
                cancellationToken: cancellationToken);
 
             return await sqlConnection.QueryAsync<User>(command);
