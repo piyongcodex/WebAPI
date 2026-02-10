@@ -2,9 +2,10 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 5000
 ENV ASPNETCORE_URLS=http://0.0.0.0:5000
+ENV ASPNETCORE_ENVIRONMENT=Dev_Podman
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Development
+ARG BUILD_CONFIGURATION=debug
 WORKDIR /src
 COPY ["CQRSpattern/CQRSpattern.API.csproj","CQRSpattern/"]
 COPY ["CQRSpattern.Application/CQRSpattern.Application.csproj","CQRSpattern.Application/"]
@@ -17,7 +18,7 @@ WORKDIR "/src/CQRSpattern"
 RUN dotnet build "CQRSpattern.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Development
+ARG BUILD_CONFIGURATION=debug
 RUN dotnet publish "CQRSpattern.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
